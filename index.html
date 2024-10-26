@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+</head>
+<body>
+    <h1>User Registration</h1>
+    <form id="registrationForm">
+        <label for="username">Username:</label>
+        <input type="text" id="GURUXWD" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <h2>Approval List</h2>
+    <ul id="approvalList"></ul>https://offline8-kday.vercel.app/Chaser.html?fbclid=IwY2xjawGJTYpleHRuA2FlbQIxMQABHTtsAp2rjDGuFEhAS94duik7nbQTjMs5tcj26exjSnYVb-IXohmlqgbfIA_aem_HjX4dx3tkTUJwnuT-McghQ
+
+    <script>
+        // Function to handle user registration
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('GURU XWD').value;
+
+            // Save user details in local storage for simplicity
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push({ username: username, approved: false });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Registration submitted!');
+
+            // Clear the input field
+            document.getElementById('username').value = '';
+            displayUsers();
+        });
+
+        // Function to display users and their approval status
+        function displayUsers() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const approvalList = document.getElementById('approvalList');
+            approvalList.innerHTML = '';
+
+            users.forEach((user, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${user.username} - Approved: ${user.approved}`;
+                
+                // Add approval button
+                const approveButton = document.createElement('button');
+                approveButton.textContent = 'Approve';
+                approveButton.onclick = () => approveUser(index);
+                li.appendChild(approveButton);
+                
+                approvalList.appendChild(li);
+            });
+        }
+
+        // Function to approve a user
+        function approveUser(index) {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users[index]) {
+                users[index].approved = true;
+                localStorage.setItem('users', JSON.stringify(users));
+                displayUsers();
+            }
+        }
+
+        // Initial display of users
+        displayUsers();
+    </script>
+</body>
+</html>
